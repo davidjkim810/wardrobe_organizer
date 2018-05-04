@@ -2,5 +2,10 @@
 
 <h1>Wardrobe Organizer</h1>
 
-<a href="/signup">Sign Up</a><br>
+<a href="/signup">Sign Up</a><br><br>
+<% if logged_in? %>
+<a href="/users/<%=current_user.slug%>">View Your Wardrobe</a><br>
+<a href="/logout">Log In As Different User</a>
+<% else %>
 <a href="/login">Log In</a>
+<% end%>

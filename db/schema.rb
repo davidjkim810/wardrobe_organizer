@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2018_05_04_180225) do
 
   create_table "wardrobes", force: :cascade do |t|
     t.string "name"
-    t.string "season"
     t.integer "user_id"
   end
 

@@ -3,4 +3,15 @@ class Wardrobe < ActiveRecord::Base
   has_many :categories
   has_many :items, through: :categories
 
+  def slug
+    self.name.downcase.gsub(' ',  '-').gsub(/[^\w-]/, '')
+  end
+
+  def self.find_by_slug(name)
+    Wardrobe.all.find do |wardrobe|
+    wardrobe.name.downcase == name.gsub('-', ' ')
+    end
+  end
+
+
 end

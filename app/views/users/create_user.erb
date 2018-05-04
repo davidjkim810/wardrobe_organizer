@@ -1,3 +1,6 @@
+<% if flash.has?(:message) %>
+<%= flash[:message] %>
+<% end %>
 
 <h1>Create New User</h1>
 
@@ -9,7 +12,3 @@ Password: <input type="text" name="password"><br>
 <input type="submit" value="Sign Up"><br>
 </form>
 <a href="/">Return Home</a>
-
-<% if flash.has?(:message) %>
-<%= flash[:message] %>
-<% end %>
