@@ -10,6 +10,7 @@ gem 'require_all'
 gem 'bcrypt'
 gem 'shotgun'
 gem 'tux'
+gem 'rack-flash3'
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
