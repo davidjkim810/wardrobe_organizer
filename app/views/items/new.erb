@@ -1,0 +1,9 @@
+<form action="/items/new" method="POST">
+Item Name: <input type="text" name="name"><br>
+Item Brand: <input type="text" name="brand"><br>
+Select Item Category: <input type="radiobutton"
+
+
+<% Category.all.each do |title| %>
+<input type="submit" value="Add Item">
+</form>
