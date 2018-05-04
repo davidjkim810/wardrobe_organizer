@@ -1,9 +1,15 @@
+
 <h1>Create New User</h1>
 
 <form action="/signup" method="POST">
 Username: <input type="text" name="username"><br>
 Nickname: <input type="text" name="nickname"><br>
 Password: <input type="text" name="password"><br>
+
 <input type="submit" value="Sign Up"><br>
 </form>
 <a href="/">Return Home</a>
+
+<% if flash.has?(:message) %>
+<%= flash[:message] %>
+<% end %>
