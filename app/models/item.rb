@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  belongs_to :wardrobe
+  belongs_to :category
   belongs_to :brand
 
 end

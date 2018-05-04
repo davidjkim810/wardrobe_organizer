@@ -3,5 +3,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
     create_table :items do |t|
       t.string :name
       t.integer :brand_id
+      t.integer :category
+    end
   end
 end
