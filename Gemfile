@@ -6,7 +6,6 @@ gem 'activerecord', :require => "active_record"
 gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'rake'
 gem 'pry'
-gem 'sinatra-activerecord'
 gem 'require_all'
 gem 'bcrypt'
 gem 'shotgun'
