@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     erb :'/users/login'
   end
   get '/users/:slug' do
-    @users = User.find_by(params[:id])
+    @users = User.find_by_slug(params[:slug])
       erb :'/users/show'
   end
 
