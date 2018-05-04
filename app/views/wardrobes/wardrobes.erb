@@ -5,9 +5,9 @@
 <% end %>
 
 <% current_user.wardrobes.each_with_index do |wardrobe,index| %>
-<%= "#{index+1}. " %><a href="/wardrobes/<%=wardrobe.id%>"><%= wardrobe.name %><br></a>
-  <% wardrobe.categories.each do |category| %>
-  <% end%>
+  <%= "#{index+1}. " %><a href="/wardrobes/<%=wardrobe.slug%>"><%= wardrobe.name %></a><br><br><form action="/wardrobes/<%=wardrobe.id%>/delete" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Wardrobe" ></form>
+
 <% end %>
 <br><br>
 <a href="/users/<%=current_user.slug%>">Return to Your Homepage</a>
