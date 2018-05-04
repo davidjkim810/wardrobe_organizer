@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_04_173751) do
+ActiveRecord::Schema.define(version: 2018_05_04_180225) do
 
   create_table "brands", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "wardrobe_id"
   end
 
   create_table "items", force: :cascade do |t|
