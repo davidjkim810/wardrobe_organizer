@@ -11,21 +11,10 @@ class WardrobesController < ApplicationController
   end
 
   get '/wardrobes/new' do
-
     if logged_in?
       erb :'/wardrobes/new'
     else
       flash[:message] = "*You must log in to create a wardobe"
-      erb :'/users/login'
-    end
-  end
-
-  get '/wardrobes/:id' do
-    if logged_in?
-      @wardrobe = Wardrobe.find_by(id: params[:id])
-      erb :'/wardrobes/show'
-    else
-      flash[:message] = "*You must log in to view this page"
       erb :'/users/login'
     end
   end
@@ -45,9 +34,31 @@ class WardrobesController < ApplicationController
           wardrobe.categories << category
         end
       end
-
       redirect '/wardrobes'
     end
+  end
+
+  get '/wardrobes/:id' do
+
+    if logged_in?
+      @wardrobe = Wardrobe.find_by(id: params[:id])
+      erb :'/wardrobes/show'
+    else
+      flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
+    end
+  end
+
+  get '/wardrobes/edit/:id' do
+    @wardrobe = Wardrobe.find_by(id: params[:id])
+
+    erb :'/wardrobes/edit'
+  end
+
+  patch '/wardrobes/edit/:id' do
+    @wardrobe = Wardrobe.find_by(id: params[:id])
+
+
   end
 
   delete '/wardrobes/:id/delete' do

@@ -1,0 +1,22 @@
+<h1>Edit Wardrobe</h1>
+
+<form action="/wardrobes/edit/<%=@wardrobe.id%>" method="POST">
+<input type="hidden" name="_method" value="PATCH">
+
+Wardrobe Name: <input type="text" name="wardrobe[name]" value="<%=@wardrobe.name%>"><br>
+
+<h1>Edit Categories</h1>
+<% @wardrobe.categories.each do |category| %>
+Category Name: <input type="text" name="category[name]" value="<%=category.name%>"><br>
+
+<% end %><br>
+
+<input type="submit" value="Edit Wardrobe">
+<% if flash.has?(:message) %>
+<h5><%=flash[:message]%></h5>
+<% end %>
+</form>
+
+<a href="/wardrobes">Back to Wardrobes</a><br>
+<a href="/users/<%=current_user.slug%>">Back to Profile</a><br>
+<a href="/logout">Log Out</a>

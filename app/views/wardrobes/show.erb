@@ -5,10 +5,10 @@
 <h3><%="#{index+1}. " %><%= category.name %></h3>
   <% if category.items.empty? %>
     <h5>There are no items in this wardrobe</h5>
-  <%else%>
+  <% else %>
     <% category.items.each do |item| %>
-      <%="Item Name: " %><%= item.name %><br>
-      <%="Item Brand: " %><%= item.brand.name %><br><br>
+      <%= "Item Name: " %><%= item.name %><br>
+      <%= "Item Brand: " %><%= item.brand.name %><br><br>
       <form action="/items/<%=item.id%>/delete" method="POST">
         <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Item" ></form>
       <%end%>
@@ -17,7 +17,8 @@
 <% if flash.has?(:message) %>
 <h5><%=flash[:message]%></h5>
 <% end %>
-<a href="/wardrobes">Edit Wardrobe</a><br>
+
+<a href="/wardrobes/edit/<%=@wardrobe.id%>">Edit Wardrobe</a><br>
 <a href="/items/new/<%=@wardrobe.id%>">Add Item</a><br><br>
 <a href="/wardrobes">Back to Wardrobes</a><br>
 <a href="/users/<%=current_user.slug%>">Back to Profile</a><br>
