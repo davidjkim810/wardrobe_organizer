@@ -9,13 +9,15 @@
     <% category.items.each do |item| %>
       <%="Item Name: " %><%= item.name %><br>
       <%="Item Brand: " %><%= item.brand.name %><br><br>
+      <form action="/items/<%=item.id%>/delete" method="POST">
+        <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Item" ></form>
       <%end%>
   <%end%>
 <%end%><br>
-
-<a href="/wardrobes">Edit Wardrobe/Categories</a><br>
-<a href="/items/new/<%=@wardrobe.slug%>">Add Items</a><br><br>
-<form action="/wardrobes/<%=@wardrobe.id%>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Wardrobe" ></form>
-<a href="/">Return Home</a><br>
+<% if flash.has?(:message) %>
+<h5><%=flash[:message]%></h5>
+<% end %>
+<a href="/wardrobes">Edit Wardrobe</a><br>
+<a href="/items/new/<%=@wardrobe.slug%>">Add Item</a><br><br>
+<a href="/users/<%=current_user.slug%>">Back to Profile</a><br>
 <a href="/logout">Log Out</a>

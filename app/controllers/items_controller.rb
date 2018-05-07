@@ -24,8 +24,15 @@ class ItemsController < ApplicationController
         brand = Brand.create(name: params[:brand])
         brand.items << new_item
       end
-      redirect '/wardrobes'
+      redirect "/wardrobes/#{@wardrobe.slug}"
     end
+  end
+
+  delete '/items/:id/delete' do
+    item = Item.find(params[:id])
+    item.delete
+    flash[:message] = "***Successfully deleted #{item.name}"
+    redirect "/wardrobes/#{item.category.wardrobe.slug}"
   end
 
 end
