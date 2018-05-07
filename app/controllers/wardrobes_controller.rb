@@ -20,10 +20,9 @@ class WardrobesController < ApplicationController
     end
   end
 
-  get '/wardrobes/:slug' do
-
+  get '/wardrobes/:id' do
     if logged_in?
-      @wardrobe = Wardrobe.find_by_slug(params[:slug])
+      @wardrobe = Wardrobe.find_by(id: params[:id])
       erb :'/wardrobes/show'
     else
       flash[:message] = "*You must log in to view this page"
@@ -41,12 +40,9 @@ class WardrobesController < ApplicationController
       current_user.wardrobes << wardrobe
 
       params[:category][:name].each do |category_name|
-        if category_name != "" && Category.find_by(name: category_name) != nil
-          flash[:message] = "*You cannot have two of the same categories"
-        elsif category_name != ""
-          new_category = Category.create(name: category_name)
-          wardrobe.categories << new_category
-          wardrobe.save
+        if category_name != ""
+          category = Category.create(name: category_name)
+          wardrobe.categories << category
         end
       end
 

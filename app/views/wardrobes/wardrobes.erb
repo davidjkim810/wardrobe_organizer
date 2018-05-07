@@ -1,13 +1,12 @@
 <h1> Wardrobes</h1>
   <% if current_user.wardrobes.empty? %>
-    <%="You have no wardrobes yet"%><br><br>
-    <a href="/wardrobes/new">Create New Wardrobe</a>
+    <%="You have not created a wardrobe"%><br><br>
   <% end %>
 
   <% current_user.wardrobes.each_with_index do |wardrobe,index| %>
 
     <%= "#{index+1}. " %>
-    <a href="/wardrobes/<%=wardrobe.slug%>"><%= wardrobe.name %></a><br><br>
+    <a href="/wardrobes/<%=wardrobe.id%>"><%= wardrobe.name %></a><br><br>
 
     <form action="/wardrobes/<%=wardrobe.id%>/delete" method="POST">
 
@@ -15,6 +14,6 @@
 
   <% end %><br>
 
-<a href="/wardrobes/new">Add New Wardrobe</a><br>
+<a href="/wardrobes/new">Add New Wardrobe</a><br><br>
 <a href="/users/<%=current_user.slug%>">Profile</a><br>
 <a href="/logout">Log Out</a>

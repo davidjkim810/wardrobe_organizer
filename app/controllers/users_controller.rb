@@ -8,8 +8,6 @@ class UsersController < ApplicationController
     erb :'/users/create_user'
   end
 
-
-
   post '/signup' do
 
     #validates that all fields are filled in, that the username is not already taken

@@ -1,7 +1,7 @@
 class Wardrobe < ActiveRecord::Base
   belongs_to :user
   has_many :categories
-  has_many :items, through: :categories
+  has_many :items
 
   def slug
     self.name.downcase.gsub(' ',  '-').gsub(/[^\w-]/, '')

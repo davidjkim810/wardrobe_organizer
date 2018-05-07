@@ -18,7 +18,7 @@
 <h5><%=flash[:message]%></h5>
 <% end %>
 <a href="/wardrobes">Edit Wardrobe</a><br>
-<a href="/items/new/<%=@wardrobe.slug%>">Add Item</a><br><br>
+<a href="/items/new/<%=@wardrobe.id%>">Add Item</a><br><br>
 <a href="/wardrobes">Back to Wardrobes</a><br>
 <a href="/users/<%=current_user.slug%>">Back to Profile</a><br>
 <a href="/logout">Log Out</a>

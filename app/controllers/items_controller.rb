@@ -1,21 +1,21 @@
 class ItemsController < ApplicationController
 
-  get '/items/new/:slug' do
+  get '/items/new/:id' do
 
-    @wardrobe = Wardrobe.find_by_slug(params[:slug])
+    @wardrobe = Wardrobe.find_by(id: params[:id])
 
     erb :'/items/new'
   end
 
   post '/items/new' do
 
-    @wardrobe = Wardrobe.find(Category.find_by(name: params[:category][:name]).wardrobe_id)
+    @wardrobe = Wardrobe.find(Category.find(params[:category][:id]).wardrobe.id)
 
     if params[:name] == "" || params[:brand] == ""
       flash[:message] = "Your item must have a name and brand."
       erb :'/items/new'
     else
-      new_item = Item.create(name: params[:name], category_id: Category.find_by(name: params[:category][:name]).id)
+      new_item = Item.create(name: params[:name], category_id: params[:category][:id], wardrobe_id: @wardrobe.id)
 
       if Brand.find_by(name: params[:brand]) != nil
         brand = Brand.find_by(name: params[:brand])
@@ -24,15 +24,17 @@ class ItemsController < ApplicationController
         brand = Brand.create(name: params[:brand])
         brand.items << new_item
       end
-      redirect "/wardrobes/#{@wardrobe.slug}"
+      redirect "/wardrobes/#{@wardrobe.id}"
     end
   end
 
   delete '/items/:id/delete' do
     item = Item.find(params[:id])
-    item.delete
+    wardrobe = Wardrobe.find(item.wardrobe.id)
+
     flash[:message] = "***Successfully deleted #{item.name}"
-    redirect "/wardrobes/#{item.category.wardrobe.slug}"
+    binding.pry
+    redirect "/wardrobes/#{wardrobe.id}"
   end
 
 end

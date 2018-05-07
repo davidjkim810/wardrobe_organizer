@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   has_many :wardrobes
-  has_many :categories, through: :wardrobes
+  has_many :items, through: :wardrobes
   has_secure_password
-  validates :username, uniqueness: true
+
 
   def slug
     self.username.downcase.gsub(' ',  '-').gsub(/[^\w-]/, '')

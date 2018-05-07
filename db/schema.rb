@@ -18,12 +18,13 @@ ActiveRecord::Schema.define(version: 2018_05_04_180225) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.integer "wardrobe_id"
+    t.string "wardrobe_id"
   end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.integer "brand_id"
+    t.integer "wardrobe_id"
     t.integer "category_id"
   end
 
