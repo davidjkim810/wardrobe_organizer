@@ -64,7 +64,4 @@ class WardrobesController < ApplicationController
       redirect '/wardrobes'
     end
   end
-
-
-
 end

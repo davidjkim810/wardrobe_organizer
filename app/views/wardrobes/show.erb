@@ -2,12 +2,13 @@
 <h1>Wardrobe: <%=@wardrobe.name%></h1>
 
 <% @wardrobe.categories.each_with_index do |category, index| %>
-<h3><%="#{index+1}. " %><%= category.name %>:</h3>
+<h3><%="#{index+1}. " %><%= category.name %></h3>
   <% if category.items.empty? %>
-    <h5>There are no items in this category yet</h5>
+    <h5>There are no items in this wardrobe</h5>
   <%else%>
     <% category.items.each do |item| %>
-      <h5><%="#{index+1}. " %><%= item.name %></h5>
+      <%="Item Name: " %><%= item.name %><br>
+      <%="Item Brand: " %><%= item.brand.name %><br><br>
       <%end%>
   <%end%>
 <%end%><br>
