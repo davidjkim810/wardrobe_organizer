@@ -8,15 +8,6 @@ class UsersController < ApplicationController
   post '/signup' do
     user = User.create(username: username, nickname: params[:nickname], password: params[:password])
 
-    if User.find_by(username: username)
-      flash[:message] = "Username Already Taken"
-      redirect to '/signup'
-    elsif !User.find_by(password: params[:password])
-      flash[:message] = "Please Enter A Password"
-    elsif 
-      flash[:message] = "** Please fill out each field"
-      redirect to '/signup'
-    end
   end
 
   get '/login' do

@@ -24,10 +24,10 @@ class ApplicationController < Sinatra::Base
     def current_user
      User.find(session[:user_id])
     end
- end
+  end
 
- def username
-   params[:username].downcase
- end
+  def username
+    params[:username].downcase
+  end
 
 end

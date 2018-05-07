@@ -1,9 +1,14 @@
+<h1>Add New Item to <%=@wardrobe.name%> Wardrobe</h1>
+
 <form action="/items/new" method="POST">
+<h3>Which category would you like to add the item to?</h3>
+<% @wardrobe.categories.each do |category| %><br>
+<input type="radio" value="<%=category.name%>" name="category[name]">  <%=category.name%>
+
+<%end%><br><br><br>
 Item Name: <input type="text" name="name"><br>
-Item Brand: <input type="text" name="brand"><br>
-Select Item Category: <input type="radiobutton"
+Item Brand: <input type="text" name="brand"><br><br>
 
 
-<% Category.all.each do |title| %>
 <input type="submit" value="Add Item">
 </form>
