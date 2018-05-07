@@ -2,11 +2,28 @@
 class UsersController < ApplicationController
 
   get '/signup' do
+    if logged_in?
+      redirect '/login'
+    end
     erb :'/users/create_user'
   end
 
+
+
   post '/signup' do
-    user = User.create(username: username, nickname: params[:nickname], password: params[:password])
+
+    #validates that all fields are filled in, that the username is not already taken
+
+    if params[:username] == "" || params[:nickname] == "" || params[:password] == ""
+      flash[:message] = "*All fields required"
+      erb :'/users/create_user'
+    elsif User.find_by(username: username) != nil
+      flash[:message] = "*Username already exists"
+      erb :'/users/create_user'
+    else
+      User.create(username: username, nickname: params[:nickname], password: params[:password])
+      erb :'/users/login'
+    end
 
   end
 
@@ -17,7 +34,16 @@ class UsersController < ApplicationController
   post '/login' do
     @user = User.find_by_username(username)
 
-    if User.all.include?(@user) && @user.authenticate(params[:password])
+    if params[:username] == "" || params[:password] == ""
+      flash[:message] = "*Please enter username and password"
+      erb :'/users/login'
+    elsif !User.all.include?(@user)
+      flash[:message] = "*Username does not exist"
+      erb :'/users/login'
+    elsif !@user.authenticate(params[:password])
+      flash[:message] = "*Incorrect password"
+      erb :'/users/login'
+    elsif User.all.include?(@user) && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect "/users/#{@user.slug}"
     end

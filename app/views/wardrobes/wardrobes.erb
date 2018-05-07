@@ -1,13 +1,18 @@
 <h1> Wardrobes</h1>
-<% if current_user.wardrobes.empty? %>
-<%="You have no wardrobes yet!"%><br><br>
-<a href="/wardrobes/new">Create A New Wardrobe</a>
-<% end %>
+  <% if current_user.wardrobes.empty? %>
+    <%="You have no wardrobes yet"%><br><br>
+    <a href="/wardrobes/new">Create New Wardrobe</a>
+  <% end %>
 
-<% current_user.wardrobes.each_with_index do |wardrobe,index| %>
-  <%= "#{index+1}. " %><a href="/wardrobes/<%=wardrobe.slug%>"><%= wardrobe.name %></a><br><br><form action="/wardrobes/<%=wardrobe.id%>/delete" method="POST">
-    <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Wardrobe" ></form>
+  <% current_user.wardrobes.each_with_index do |wardrobe,index| %>
 
-<% end %>
-<br><br>
-<a href="/users/<%=current_user.slug%>">Return to Your Homepage</a>
+    <%= "#{index+1}. " %>
+    <a href="/wardrobes/<%=wardrobe.slug%>"><%= wardrobe.name %></a><br><br>
+
+    <form action="/wardrobes/<%=wardrobe.id%>/delete" method="POST">
+
+      <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Wardrobe" ></form>
+
+  <% end %><br><br>
+
+<a href="/users/<%=current_user.slug%>">Return Home</a>
