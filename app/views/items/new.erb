@@ -14,3 +14,8 @@ Item Brand: <input type="text" name="brand"><br><br>
 <h5><%=flash[:message]%></h5>
 <% end %>
 </form>
+
+<a href="/wardrobes/<%=@wardrobe.slug%>">Back to <%=@wardrobe.name%> Wardrobe</a><br>
+<a href="/wardrobes">Wardrobes</a><br>
+<a href="/users/<%=current_user.slug%>"> Profile</a><br>
+<a href="/logout">Log Out</a>
