@@ -39,12 +39,15 @@ class WardrobesController < ApplicationController
   end
 
   get '/wardrobes/:id' do
-
-    if logged_in?
-      @wardrobe = Wardrobe.find_by(id: params[:id])
+    @wardrobe = Wardrobe.find_by(id: params[:id])
+binding.pry
+    if logged_in? && current_user.id == @wardrobe.user_id
       erb :'/wardrobes/show'
-    else
-      flash[:message] = "*You must log in to view this page"
+    elsif !logged_in?
+        flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
+    elsif current_user.id != @wardrobe.user_id
+      flash[:message] = "*Access Denied"
       erb :'/users/login'
     end
   end
@@ -52,23 +55,53 @@ class WardrobesController < ApplicationController
   get '/wardrobes/edit/:id' do
     @wardrobe = Wardrobe.find_by(id: params[:id])
 
-    erb :'/wardrobes/edit'
+    if logged_in? && current_user.id == @wardrobe.user_id
+      erb :'/wardrobes/edit'
+    elsif current_user.id != @wardrobe.user_id
+        flash[:message] = "*Access Denied"
+      erb :'/users/login'
+    elsif !logged_in?
+        flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
+    end
   end
 
   patch '/wardrobes/edit/:id' do
     @wardrobe = Wardrobe.find_by(id: params[:id])
 
+    if logged_in? && current_user.id == @wardrobe.user_id
+      @wardrobe.name = params[:wardrobe][:name]
+      @wardrobe.save
 
+      if params[:name] != nil && params[:category][:name] != ""
+        wardrobe_to_edit = @wardrobe.categories.find {|i| i.name == params[:name]}
+        wardrobe_to_edit.name = params[:category][:name]
+        wardrobe_to_edit.save
+        @wardrobe.save
+      end
+      erb :'/wardrobes/show'
+    elsif current_user.id != @wardrobe.user_id
+        flash[:message] = "*Access Denied"
+      erb :'/users/login'
+    elsif !logged_in?
+        flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
+    end
   end
 
   delete '/wardrobes/:id/delete' do
     wardrobe = Wardrobe.find(params[:id])
-    if !logged_in?
-      redirect '/'
-    elsif logged_in? && wardrobe.user_id == current_user.id
+
+    if logged_in? && wardrobe.user_id == current_user
       wardrobe = Wardrobe.find(params[:id])
       wardrobe.delete
       redirect '/wardrobes'
+    elsif current_user.id != @wardrobe.user_id
+        flash[:message] = "*Access Denied"
+      erb :'/users/login'
+    elsif !logged_in?
+        flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
     end
   end
 end

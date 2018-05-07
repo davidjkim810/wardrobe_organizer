@@ -7,3 +7,6 @@
   <a href="/users/<%=current_user.slug%>">View Wardrobes</a><br>
   <a href="/logout">Log Out</a>
 <% end%>
+<% if flash.has?(:message) %>
+<h5><%=flash[:message]%></h5>
+<% end %>

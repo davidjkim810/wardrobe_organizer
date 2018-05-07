@@ -26,6 +26,10 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
+    if logged_in?
+      flash[:message] = "Log out in order to sign in as a different user"
+      erb :index
+    end
     erb :'/users/login'
   end
 

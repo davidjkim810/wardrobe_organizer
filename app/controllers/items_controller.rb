@@ -1,7 +1,6 @@
 class ItemsController < ApplicationController
 
   get '/items/new/:id' do
-
     @wardrobe = Wardrobe.find_by(id: params[:id])
 
     erb :'/items/new'
