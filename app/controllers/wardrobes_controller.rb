@@ -103,6 +103,14 @@ class WardrobesController < ApplicationController
 
     if logged_in? && wardrobe.user_id == current_user.id
       wardrobe = Wardrobe.find(params[:id])
+
+      wardrobe.categories.each do |category|
+        category.items.each do |item|
+          item.delete
+        end
+        category.delete
+      end
+
       wardrobe.delete
       redirect '/wardrobes'
     elsif current_user.id != wardrobe.user_id
