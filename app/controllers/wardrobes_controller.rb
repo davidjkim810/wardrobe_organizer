@@ -40,14 +40,18 @@ class WardrobesController < ApplicationController
 
   get '/wardrobes/:id' do
     @wardrobe = Wardrobe.find_by(id: params[:id])
-binding.pry
-    if logged_in? && current_user.id == @wardrobe.user_id
-      erb :'/wardrobes/show'
-    elsif !logged_in?
-        flash[:message] = "*You must log in to view this page"
-      erb :'/users/login'
-    elsif current_user.id != @wardrobe.user_id
-      flash[:message] = "*Access Denied"
+    if @wardrobe != nil
+      if logged_in? && current_user.id == @wardrobe.user_id
+        erb :'/wardrobes/show'
+      elsif !logged_in?
+          flash[:message] = "*You must log in to view this page"
+        erb :'/users/login'
+      elsif current_user.id != @wardrobe.user_id
+        flash[:message] = "*Access Denied"
+        erb :'/users/login'
+      end
+    else
+        flash[:message] = "*The wardrobe you are looking for does not exist"
       erb :'/users/login'
     end
   end
@@ -73,6 +77,11 @@ binding.pry
       @wardrobe.name = params[:wardrobe][:name]
       @wardrobe.save
 
+      if params[:category][:newname] != ""
+        category = Category.create(name: params[:category][:newname])
+        @wardrobe.categories << category
+      end
+
       if params[:name] != nil && params[:category][:name] != ""
         wardrobe_to_edit = @wardrobe.categories.find {|i| i.name == params[:name]}
         wardrobe_to_edit.name = params[:category][:name]
@@ -92,10 +101,28 @@ binding.pry
   delete '/wardrobes/:id/delete' do
     wardrobe = Wardrobe.find(params[:id])
 
-    if logged_in? && wardrobe.user_id == current_user
+    if logged_in? && wardrobe.user_id == current_user.id
       wardrobe = Wardrobe.find(params[:id])
       wardrobe.delete
       redirect '/wardrobes'
+    elsif current_user.id != wardrobe.user_id
+        flash[:message] = "*Access Denied"
+      erb :'/users/login'
+    elsif !logged_in?
+        flash[:message] = "*You must log in to view this page"
+      erb :'/users/login'
+    end
+  end
+
+  delete '/wardobes/categories/:id/delete' do
+    category = Category.find(params[:id])
+    @wardrobe = Wardrobe.find(category.wardrobe_id)
+    if logged_in? && @wardrobe.user_id == current_user.id
+      category.items.each do |item|
+        item.delete
+      end
+      category.delete
+        redirect "/wardrobes/#{@wardrobe.id}"
     elsif current_user.id != @wardrobe.user_id
         flash[:message] = "*Access Denied"
       erb :'/users/login'
@@ -104,4 +131,6 @@ binding.pry
       erb :'/users/login'
     end
   end
+
+
 end

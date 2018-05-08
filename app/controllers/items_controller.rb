@@ -7,9 +7,7 @@ class ItemsController < ApplicationController
   end
 
   post '/items/new' do
-
     @wardrobe = Wardrobe.find(Category.find(params[:category][:id]).wardrobe.id)
-
     if params[:name] == "" || params[:brand] == ""
       flash[:message] = "Your item must have a name and brand."
       erb :'/items/new'
@@ -27,12 +25,15 @@ class ItemsController < ApplicationController
     end
   end
 
+  get '/items/items' do
+    erb :'/items/items'
+  end
+
   delete '/items/:id/delete' do
     item = Item.find(params[:id])
     wardrobe = Wardrobe.find(item.wardrobe.id)
-
+    item.delete
     flash[:message] = "***Successfully deleted #{item.name}"
-    binding.pry
     redirect "/wardrobes/#{wardrobe.id}"
   end
 

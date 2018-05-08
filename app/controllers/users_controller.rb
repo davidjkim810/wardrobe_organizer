@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    @user = User.find_by_username(username)
+    @user = User.find_by(username: username)
 
     if params[:username] == "" || params[:password] == ""
       flash[:message] = "*Please enter username and password"
@@ -57,6 +57,7 @@ class UsersController < ApplicationController
     @user = User.find_by_slug(params[:slug])
 
     if logged_in? && current_user.id == @user.id
+
       erb :'/users/show'
     elsif logged_in?
       redirect "/users/#{current_user.slug}"

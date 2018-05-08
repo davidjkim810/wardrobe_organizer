@@ -5,18 +5,32 @@
 
 Wardrobe Name: <input type="text" name="wardrobe[name]" value="<%=@wardrobe.name%>"><br>
 
-<h1>Select Category to Update</h1>
+<h1>Update Existing Category</h1>
 <% @wardrobe.categories.each do |category| %>
 <input type="radio" name="name" value="<%=category.name%>"> <%=category.name%><br>
 <% end %><br>
-Enter New Category Name: <input type="text" name="category[name]"><br><br>
+Enter Updated Category Name: <input type="text" name="category[name]"><br><br>
 
+<h1>Add New Category</h1>
+Enter New Category Name: <input type="text" name="category[newname]"><br><br>
 
-<input type="submit" value="Edit Wardrobe">
+<input type="submit" value="Update Wardrobe"><br><br>
 <% if flash.has?(:message) %>
 <h5><%=flash[:message]%></h5>
 <% end %>
 </form>
+
+
+
+<h1>Delete Existing Category</h1>
+<% @wardrobe.categories.each do |category| %>
+ <%=category.name%><br>
+<form action="/wardobes/categories/<%=category.id%>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete"><input type="submit" value="Delete Category"><br>
+
+</form>
+<% end %><br>
+
 
 <a href="/wardrobes">Back to Wardrobes</a><br>
 <a href="/users/<%=current_user.slug%>">Back to Profile</a><br>

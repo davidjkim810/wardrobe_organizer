@@ -1,0 +1,13 @@
+<h1><%= current_user.nickname %>'s Item Collection</h1>
+
+<% if current_user.items.empty? %>
+<%= "There are no items in your wardrobe" %><br><br>
+<% end %>
+
+<% current_user.items.each_with_index do |item, index| %>
+<%="#{index+1}. " %><%= item.name %> by <%= item.brand.name %> in your <a href="/wardrobes/<%=item.wardrobe.id%>"><%=item.wardrobe.name%></a> Wardrobe<br><br>
+<% end %>
+
+<a href="/wardrobes">Wardrobes</a><br>
+<a href="/users/<%=current_user.slug%>">Profile</a><br>
+<a href="/logout">Log Out</a>
